@@ -1,6 +1,6 @@
 #!/bin/bash -x
 
-rancher_ip="172.22.101.100"
+rancher_ip="172.22.101.101"
 admin_password=${1:-password}
 rancher_version=${2:-latest}
 k8s_version=$3

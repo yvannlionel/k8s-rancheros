@@ -16,7 +16,7 @@ rke:
   memory: 4096
 ip:
 
-  server: 172.22.101.100
+  server: 172.22.101.101
   node:   172.22.101.110
   rke: 172.22.101.130
 linked_clones: true
