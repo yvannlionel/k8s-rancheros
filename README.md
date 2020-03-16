@@ -22,9 +22,10 @@ The default password is `admin`, but this can be updated in the config.yaml file
 To remove the VMs that have been deployed run `vagrant destroy -f`
 
 
-##Grid5000
+## Grid5000
 
 0. Installation steps of VirtualBox 6.0 on CentOS 8 / RHEL 8
+
 Step:1) Enable VirtualBox and EPEL Repository
 Login to your CentOS 8 or RHEL 8 system and open terminal and execute the following commands to enable VirtualBox and EPEL package repository.
  
