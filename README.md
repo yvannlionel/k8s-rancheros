@@ -53,7 +53,9 @@ VirtualBox-6.0.x86_64 : Oracle VM VirtualBox
 Let’s install latest version of VirtualBox 6.0 using following dnf command,
 
 [root@linuxtechi ~]# dnf install VirtualBox-6.0 -y
-
+0. Install Vagrant and Git
+yum install https://releases.hashicorp.com/vagrant/2.2.7/vagrant_2.2.7_x86_64.rpm
+yum install git
 0. Clone this repository and go into the vagrant subfolder
 0. Run `vagrant up`
 0. Access to Rancher Server UI
