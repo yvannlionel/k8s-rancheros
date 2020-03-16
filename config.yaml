@@ -17,7 +17,7 @@ rke:
 ip:
 
   server: 172.22.101.101
-  node:   172.22.101.110
+  node: 172.22.101.110
   rke: 172.22.101.130
 linked_clones: true
 net:

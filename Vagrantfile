@@ -13,7 +13,7 @@ Vagrant.configure(2) do |config|
 
      # SSH Configuration
     config.ssh.username = "rancher"
-    #config.ssh.keys_only = true
+    config.ssh.keys_only = true
     #config.ssh.private_key_path="./keys/vagrant"
 ###On-prem Rancher Cluster###
     config.vm.define "server-01" do |server|
@@ -29,11 +29,15 @@ Vagrant.configure(2) do |config|
         v.name = "server-01"
       end
       server.vm.network x.fetch('net').fetch('network_type'), ip: x.fetch('ip').fetch('server') , nic_type: $private_nic_type
+      server.vm.network "forwarded_port", guest: 443, host: "443"
       server.vm.hostname = "server-01"
       server.vm.provision "shell", path: "scripts/configure_rancher_server.sh", args: [x.fetch('admin_password'), x.fetch('version'), x.fetch('k8s_version')]
       server.vm.provision "install-kubectl", type: "shell", :path => "scripts/install-kubectl.sh"
       server.vm.provision "install-rke", type: "shell", :path => "scripts/install-rke.sh"
       server.vm.provision "install-helm3", type: "shell", :path => "scripts/install-helm.sh"
+      server.vm.provision "setup-hosts", :type => "shell", :path => "scripts/setup-hosts.sh" do |s|
+          s.args = ["eth1"]
+        end
       #server.vm.provision "install-rancherui", type: "shell", :path => "scripts/install-rancherui.sh"
     
   end
@@ -55,11 +59,14 @@ Vagrant.configure(2) do |config|
       node.vm.network x.fetch('net').fetch('network_type'), ip: IPAddr.new(node_ip.to_i + i - 1, Socket::AF_INET).to_s, nic_type: $private_nic_type
       node.vm.hostname = hostname
       node.vm.provision "shell", path: "scripts/configure_rancher_node.sh", args: [x.fetch('ip').fetch('server'), x.fetch('admin_password')]
+      node.vm.provision "setup-hosts", :type => "shell", :path => "scripts/setup-hosts.sh" do |s|
+          s.args = ["eth1"]
+        end
     end
   end
 
 ###On-prem RKE Cluster###
-  node_ip = IPAddr.new(x.fetch('ip').fetch('rke'))
+  rke_ip = IPAddr.new(x.fetch('ip').fetch('rke'))
   (1..x.fetch('rke').fetch('count')).each do |i|
     c = x.fetch('rke')
     hostname = "rke-%02d" % i
@@ -73,9 +80,12 @@ Vagrant.configure(2) do |config|
         v.memory = c.fetch('memory')
         v.name = hostname
       end
-      node.vm.network x.fetch('net').fetch('network_type'), ip: IPAddr.new(node_ip.to_i + i - 1, Socket::AF_INET).to_s, nic_type: $private_nic_type
+      node.vm.network x.fetch('net').fetch('network_type'), ip: IPAddr.new(rke_ip.to_i + i - 1, Socket::AF_INET).to_s, nic_type: $private_nic_type
       node.vm.hostname = hostname
       #node.vm.provision "shell", path: "scripts/configure_rancher_node.sh", args: [x.fetch('ip').fetch('server'), x.fetch('admin_password')]
+      node.vm.provision "setup-hosts", :type => "shell", :path => "scripts/setup-hosts.sh" do |s|
+          s.args = ["eth1"]
+        end
     end
   end
 
