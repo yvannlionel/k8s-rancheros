@@ -9,7 +9,7 @@ server:
 node:
   count: 1
   cpus: 1
-  memory: 4096
+  memory: 5096
 rke:
   count: 2
   cpus: 1
