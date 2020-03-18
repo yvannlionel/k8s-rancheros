@@ -14,6 +14,7 @@ Vagrant.configure(2) do |config|
      # SSH Configuration
     config.ssh.username = "rancher"
     config.ssh.keys_only = true
+    config.disksize.size = '50GB'
     #config.ssh.private_key_path="./keys/vagrant"
 ###On-prem Rancher Cluster###
     config.vm.define "server-01" do |server|
