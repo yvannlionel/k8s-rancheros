@@ -14,12 +14,12 @@ Vagrant.configure(2) do |config|
      # SSH Configuration
     config.ssh.username = "rancher"
     config.ssh.keys_only = true
-    config.disksize.size = '50GB'
+    #config.disksize.size = '50GB'
     #config.ssh.private_key_path="./keys/vagrant"
 ###On-prem Rancher Cluster###
     config.vm.define "server-01" do |server|
      c = x.fetch('server')
-      server.vm.box= "walidsaad/RancherOS_1.5.5"
+      server.vm.box= "walidsaad/RancherOS_1.5.6"
       server.vm.box_version = x.fetch('ROS_version')
       server.vm.guest = :linux
       server.vm.provider :virtualbox do |v|
@@ -48,7 +48,7 @@ Vagrant.configure(2) do |config|
     c = x.fetch('node')
     hostname = "node-%02d" % i
     config.vm.define hostname do |node|
-      node.vm.box   = "walidsaad/RancherOS_1.5.5"
+      node.vm.box   = "walidsaad/RancherOS_1.5.6"
       node.vm.box_version = x.fetch('ROS_version')
       node.vm.guest = :linux
       node.vm.provider "virtualbox" do |v|
@@ -72,7 +72,7 @@ Vagrant.configure(2) do |config|
     c = x.fetch('rke')
     hostname = "rke-%02d" % i
     config.vm.define hostname do |node|
-      node.vm.box   = "walidsaad/RancherOS_1.5.5"
+      node.vm.box   = "walidsaad/RancherOS_1.5.6"
       node.vm.box_version = x.fetch('ROS_version')
       node.vm.guest = :linux
       node.vm.provider "virtualbox" do |v|

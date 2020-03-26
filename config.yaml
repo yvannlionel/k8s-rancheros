@@ -1,6 +1,6 @@
 admin_password: admin
 version: latest
-ROS_version: 1.5.5
+ROS_version: 1.5.6
 # Empty defaults to latest non-experimental available
 k8s_version: ""
 server:
