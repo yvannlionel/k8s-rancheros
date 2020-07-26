@@ -66,28 +66,4 @@ Vagrant.configure(2) do |config|
     end
   end
 
-###On-prem RKE Cluster###
-  rke_ip = IPAddr.new(x.fetch('ip').fetch('rke'))
-  (1..x.fetch('rke').fetch('count')).each do |i|
-    c = x.fetch('rke')
-    hostname = "rke-%02d" % i
-    config.vm.define hostname do |node|
-      node.vm.box   = "walidsaad/RancherOS_1.5.6"
-      node.vm.box_version = x.fetch('ROS_version')
-      node.vm.guest = :linux
-      node.vm.provider "virtualbox" do |v|
-        v.cpus = c.fetch('cpus')
-        v.linked_clone = true if Gem::Version.new(Vagrant::VERSION) >= Gem::Version.new('1.8.0') and x.fetch('linked_clones')
-        v.memory = c.fetch('memory')
-        v.name = hostname
-      end
-      node.vm.network x.fetch('net').fetch('network_type'), ip: IPAddr.new(rke_ip.to_i + i - 1, Socket::AF_INET).to_s, nic_type: $private_nic_type
-      node.vm.hostname = hostname
-      #node.vm.provision "shell", path: "scripts/configure_rancher_node.sh", args: [x.fetch('ip').fetch('server'), x.fetch('admin_password')]
-      node.vm.provision "setup-hosts", :type => "shell", :path => "scripts/setup-hosts.sh" do |s|
-          s.args = ["eth1"]
-        end
-    end
-  end
-
 end
