@@ -7,18 +7,14 @@ server:
   cpus: 1
   memory: 4096
 node:
-  count: 1
-  cpus: 1
-  memory: 5096
-rke:
   count: 2
-  cpus: 1
-  memory: 4096
+  cpus: 2
+  memory: 5096
+
 ip:
 
   server: 172.22.101.101
   node: 172.22.101.110
-  rke: 172.22.101.130
 linked_clones: true
 net:
   private_nic_type: 82545EM
