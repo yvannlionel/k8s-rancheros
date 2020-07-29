@@ -9,7 +9,7 @@ server:
 node:
   count: 2
   cpus: 2
-  memory: 5096
+  memory: 3500
 
 ip:
 
