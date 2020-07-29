@@ -19,7 +19,7 @@ Vagrant.configure(2) do |config|
 ###On-prem Rancher Cluster###
     config.vm.define "server-01" do |server|
      c = x.fetch('server')
-      server.vm.box= "walidsaad/RancherOS_1.5.6"
+      server.vm.box= "yvannlionel/RancherOS_1.5.6"
       server.vm.box_version = x.fetch('ROS_version')
       server.vm.guest = :linux
       server.vm.provider :virtualbox do |v|
@@ -34,8 +34,8 @@ Vagrant.configure(2) do |config|
       server.vm.hostname = "server-01"
       server.vm.provision "shell", path: "scripts/configure_rancher_server.sh", args: [x.fetch('admin_password'), x.fetch('version'), x.fetch('k8s_version')]
       server.vm.provision "install-kubectl", type: "shell", :path => "scripts/install-kubectl.sh"
-      server.vm.provision "install-rke", type: "shell", :path => "scripts/install-rke.sh"
-      server.vm.provision "install-helm3", type: "shell", :path => "scripts/install-helm.sh"
+    //  server.vm.provision "install-rke", type: "shell", :path => "scripts/install-rke.sh"
+    //  server.vm.provision "install-helm3", type: "shell", :path => "scripts/install-helm.sh"
       server.vm.provision "setup-hosts", :type => "shell", :path => "scripts/setup-hosts.sh" do |s|
           s.args = ["eth1"]
         end
